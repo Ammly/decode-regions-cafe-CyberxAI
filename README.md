@@ -1,6 +1,6 @@
 # De{c0}dE REGIONAL CAFÉS​
 
-## Break & Secure - Cybersecurity in the Age of AI
+## Break & Secure -  Cyber X AI
 
 ### A hands-on builder lab: build AI apps, break them, secure them
 
