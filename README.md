@@ -20,9 +20,9 @@ Any **OpenAI-compatible** endpoint — pick one:
 
 - **Google AI Studio (Gemini)** — free key at <https://aistudio.google.com/apikey>, no card.
   Advanced safety training means Gemini often *refuses* these attacks (see the lesson below).
-- **Workshop LiteLLM endpoint** — the instructor hands out a temporary key (revoked after the event)
-  with several open-source models that are far more susceptible: `qwen3-coder-30b`, `glm-4.7-flash`,
-  `devstral-2-123b`, `qwen3-vl-235b`, plus `claude-haiku-4-5-*`.
+- **Workshop LiteLLM endpoint** — the instructor hands out a temporary key **and a base URL** (both
+  revoked after the event) with several open-source models that are far more susceptible:
+  `qwen3-coder-30b`, `glm-4.7-flash`, `devstral-2-123b`, `qwen3-vl-235b`, plus `claude-haiku-4-5-*`.
 
 The notebooks use the **plain `openai` Python SDK** (not a vendor library), so nothing is locked in —
 you set `PROVIDER = "google"` or `"litellm"` in the Setup cell and everything else is identical.
@@ -80,14 +80,14 @@ a defense; each defense can be beaten. Debrief with two questions:
 
 ## The labs
 
-| #   | Lab                                          | OWASP (2025)           | Flag                                            |
-| --- | -------------------------------------------- | ---------------------- | ----------------------------------------------- |
-| 1   | Prompt Injection & System-Prompt Leakage     | LLM01 + LLM07          | `decode{system_prompt_is_not_a_secret_store}`   |
-| 2   | The Agent With a Database (Excessive Agency) | LLM06 + LLM01          | `decode{excessive_agency_full_table_dump}`      |
-| 3   | Indirect / RAG Injection                     | LLM01 + LLM08          | `decode{data_can_carry_instructions}`           |
-| 4   | Improper Output Handling (XSS + eval RCE)    | LLM05                  | `decode{llm_output_is_untrusted_input}`         |
-| 5   | Agent Skill / Tool Poisoning                 | Agentic Skills + MCP03 | `decode{tools_read_descriptions_you_never_see}` |
-| 6   | Unbounded Consumption (Denial-of-Wallet)     | LLM10                  | `decode{always_cap_the_loop}`                   |
+| #   | Lab                                          | OWASP (2025)           | Flag                                            | Open in Colab                                                                                                                                                                                               |
+| --- | -------------------------------------------- | ---------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Prompt Injection & System-Prompt Leakage     | LLM01 + LLM07          | `decode{system_prompt_is_not_a_secret_store}`   | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ammly/decode-regions-cafe-CyberxAI/blob/main/Lab1_Prompt_Injection_And_Leakage.ipynb) |
+| 2   | The Agent With a Database (Excessive Agency) | LLM06 + LLM01          | `decode{excessive_agency_full_table_dump}`      | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ammly/decode-regions-cafe-CyberxAI/blob/main/Lab2_Agent_With_A_Database.ipynb)        |
+| 3   | Indirect / RAG Injection                     | LLM01 + LLM08          | `decode{data_can_carry_instructions}`           | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ammly/decode-regions-cafe-CyberxAI/blob/main/Lab3_Indirect_RAG_Injection.ipynb)       |
+| 4   | Improper Output Handling (XSS + eval RCE)    | LLM05                  | `decode{llm_output_is_untrusted_input}`         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ammly/decode-regions-cafe-CyberxAI/blob/main/Lab4_Improper_Output_Handling.ipynb)     |
+| 5   | Agent Skill / Tool Poisoning                 | Agentic Skills + MCP03 | `decode{tools_read_descriptions_you_never_see}` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ammly/decode-regions-cafe-CyberxAI/blob/main/Lab5_Agent_Skill_Tool_Poisoning.ipynb)   |
+| 6   | Unbounded Consumption (Denial-of-Wallet)     | LLM10                  | `decode{always_cap_the_loop}`                   | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ammly/decode-regions-cafe-CyberxAI/blob/main/Lab6_Unbounded_Consumption.ipynb)        |
 
 Each notebook has the same shape: **🔴 vulnerable build → 🩸 attack (reveals the flag) → weak fix that
 gets bypassed → 🟢 real fix → re-run the attack and watch it fail.**
@@ -96,9 +96,12 @@ gets bypassed → 🟢 real fix → re-run the attack and watch it fail.**
 
 ## How to run a lab
 
-1. Open the `.ipynb` in Colab (**File → Upload notebook**, or push this repo to GitHub and use the
-   *Open in Colab* badge).
-2. Run the **Setup** cell, paste your Gemini key when prompted.
+1. Click the **Open in Colab** badge next to any lab in the table above (repo must be public), or
+   open Colab and use **File → Upload notebook** to upload the `.ipynb` from your local clone.
+2. In the **Setup** cell, set `PROVIDER = "google"` or `"litellm"`, then run it:
+   - **Google:** you will be prompted for your AI Studio API key.
+   - **LiteLLM (workshop):** you will be prompted for the API key and then the base URL — your
+     instructor provides both at the start of the session.
 3. Work top to bottom. Try to write the fix yourself before opening the 🟢 solution section.
 
 ---
@@ -109,8 +112,9 @@ gets bypassed → 🟢 real fix → re-run the attack and watch it fail.**
   lesson above, so *use it*. When you want an exploit to land every time, switch `PROVIDER` to
   `"litellm"` and pick an open model (`qwen3-coder-30b`, `glm-4.7-flash`). Test your exact key + model
   the night before; behavior drifts.
-- **Your LiteLLM key is temporary.** It's revoked after the event. Hand it out at the start; students
-  paste it into the Setup cell (it's read with `getpass`, never hard-coded in the notebook).
+- **Your LiteLLM credentials are temporary.** Both the key and the base URL are revoked after the
+  event. Share both at the start of the session; students enter them in the Setup cell when prompted
+  (read with `getpass` — neither value is hard-coded in the notebooks).
 - **Rate limits:** free-tier quota is per-project. 30 students on one key *will* throttle. Everyone on
   their **own** AI Studio key avoids this — bake it into the 15-min setup window.
 - **Lab 5's best line:** the MCPTox benchmark found *more capable* models obey poisoned tool
