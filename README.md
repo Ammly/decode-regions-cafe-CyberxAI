@@ -106,9 +106,15 @@ gets bypassed → 🟢 real fix → re-run the attack and watch it fail.**
 
 ---
 
-## Instructor notes
+## 🎯 Free Practice Resources & CTFs
 
-See [INSTRUCTOR_NOTES.md](INSTRUCTOR_NOTES.md) for the full facilitation guide.
+Continue honing your AI/LLM agent red-teaming and security skills with these interactive platforms and benchmarks:
+
+- **[Gandalf - Agent Breaker](https://gandalf.lakera.ai/agent-breaker)** - A gamified red-teaming challenge by Lakera where you hack simulated GenAI agent applications across escalating defense levels using prompt injection, tool abuse, and data exfiltration.
+- **[Hack the Agent](https://hacktheagent.com/)** - An interactive AI agent security CTF where participants exploit enterprise LLM assistants to bypass strict business logic, extract secret keys, and escalate privileges.
+- **[OWASP FinBot CTF](https://owasp-finbot-ctf.org/)** - The "Juice Shop for Agentic AI." An intentionally vulnerable multi-agent financial platform designed to practice goal hijacking, tool poisoning, and RCE mapped to the OWASP Top 10 for Agentic Applications.
+- **[AgentDojo](https://github.com/ethz-spylab/agentdojo)** - An open-source evaluation framework and dynamic sandbox environment for designing, testing, and benchmarking prompt injection attacks and defenses against autonomous LLM agents.
+- **[Dreadnode Crucible](https://app.dreadnode.io/)** - A black-box AI red-teaming CTF environment by Dreadnode featuring hands-on challenges that test your ability to discover and exploit LLM vulnerabilities, jailbreak models, and perform system exploitation.
 
 ---
 
@@ -126,3 +132,9 @@ Lab6_Unbounded_Consumption.ipynb
 ```
 
 Stack: Python + the **`openai` SDK** pointed at any OpenAI-compatible endpoint (Google AI Studio or a LiteLLM proxy).
+
+---
+
+## Instructor notes
+
+See [INSTRUCTOR_NOTES.md](INSTRUCTOR_NOTES.md) for the full facilitation guide.
